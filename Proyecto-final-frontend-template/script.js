@@ -95,6 +95,33 @@ const renderTareas = async () => {
         
         listaTareas.appendChild(listItem)
 
+        // -----Botones---------
+        const wrapperBotones = document.createElement("div")
+        wrapperBotones.classList.add("wrapper-botones")
+
+        const buttonVerMas = document.createElement("button")
+        const buttonEditar = document.createElement("button")
+        const buttonEliminar = document.createElement("button")
+
+        buttonVerMas.innerText = `Ver mas`
+        buttonEditar.innerText = `Editar`
+        buttonEliminar.innerText = `Eliminar`
+
+        wrapperBotones.appendChild(buttonVerMas)
+        wrapperBotones.appendChild(buttonEditar)
+        wrapperBotones.appendChild(buttonEliminar)
+
+        article.appendChild(wrapperBotones)
+
+        // -------agregar evento click al buton ver mas-------
+
+        buttonVerMas.addEventListener("click", async () =>{
+            //console.log(tarea._id)
+            const tareaObtenida = await verTarea(tarea._id)
+            console.log(tareaObtenida)
+
+        })
+
     })
 }
 
