@@ -32,6 +32,8 @@ const tareas = [
 const crearTarea = async (tarea) => {
     // enviar consulta a la API para crear una tarea
     alert('tarea creada')
+
+    tareas.push(tarea)
 }
 
 const obtenerTareas = async () => {
@@ -66,6 +68,8 @@ const eliminarTarea = async (id) => {
 // -----------------------  Renderizar tareas en el HTML -----------------------
 const listaTareas = document.getElementById('lista-tareas')
 const renderTareas = async () => {
+
+    listaTareas.innerHTML = ""
     
     const listaTareasObtenidas = await obtenerTareas()
 
@@ -118,7 +122,13 @@ const renderTareas = async () => {
         buttonVerMas.addEventListener("click", async () =>{
             //console.log(tarea._id)
             const tareaObtenida = await verTarea(tarea._id)
-            console.log(tareaObtenida)
+            //console.log(tareaObtenida)
+
+            const descripcion = document.createElement("p")
+            descripcion.innerText = `Descripcion: ${tareaObtenida.descripcion}`
+            datos.appendChild(descripcion)
+            //deshabilitar el botos
+            buttonVerMas.disabled = true
 
         })
 
@@ -147,7 +157,19 @@ buttonCerrarFormEditar.addEventListener('click', () => {
 
 // -----------------------  Crear tarea -----------------------
 const formCrearTarea = document.getElementById('form-crear-tarea')
-formCrearTarea.addEventListener('submit', async (e) => {
+formCrearTarea.addEventListener('submit', async (event) => {
+   
+    event.preventDefault()
+    
+    // ---leer los datos del formulario
+
+    const data = Object.fromEntries(new FormData(event.target))
+    //console.log(data)
+
+    await crearTarea(data)
+    renderTareas()
+
+
 
 })
 
